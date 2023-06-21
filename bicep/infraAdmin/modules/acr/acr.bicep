@@ -8,7 +8,7 @@ param suffix string
 param tags object
 
 resource acr 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
-  name: 'myacr'
+  name: 'acrshared${suffix}'
   location: location
   tags: tags
   sku: {
