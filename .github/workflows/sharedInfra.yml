@@ -1,6 +1,11 @@
-name: Create Azure Resources
+name: Create Shared Infra Azure Resources
 
 on:  
+  push:
+    branches:
+      - main
+    paths:
+      - "bicep/infraAdmin/*"
   workflow_dispatch:
 
 jobs:
