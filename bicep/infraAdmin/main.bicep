@@ -6,6 +6,10 @@ param location string
 @description('Azure resource group name')
 param managementRgName string
 
+param vnetConfig object = {
+  addressSpace: '172.0.0.0/16'
+}
+
 var suffix = uniqueString(rg.id)
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -24,6 +28,15 @@ module acr 'modules/acr/acr.bicep' = {
     location: location
     suffix: suffix
     tags: tags
+  }
+}
+
+module vnetManagement 'modules/network/management.vnet.bicep' = {
+  scope: resourceGroup(rg.name)
+  name: 'vnetManagement'
+  params: {
+    location: location
+    vnetConfig: vnetConfig
   }
 }
 
