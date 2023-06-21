@@ -1,0 +1,42 @@
+name: Create Azure Resources
+
+on:  
+  workflow_dispatch:
+
+jobs:
+  create-azure-resources:
+
+    env:
+      DEPLOYMENT_NAME: shared-deployment
+      LOCATION: ${{ secrets.LOCATION }}
+      RG_NAME: ${{ secrets.SHARED_RESOURCE_GROUP_NAME }}
+      WORKING_DIR: ./bicep/infraAdmin
+
+    runs-on: ubuntu-latest
+
+    steps:
+      
+      - uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}      
+
+      - name: deploy
+        id: createResources
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          scope: subscription
+          region: ${{ env.LOCATION }}
+          deploymentName:  ${{ env.DEPLOYMENT_NAME }}
+          template: ${{ env.WORKING_DIR }}/main.bicep
+          parameters: location=${{ env.LOCATION }} managementRgName=${{ env.RG_NAME }}
+
+      - uses: gliech/create-github-secret-action@v1
+        name: Write ACR Login Server
+        with:
+          name: ACR_LOGIN_SERVER_NAME
+          value: ${{ steps.createResources.outputs.acrLoginServer }}
+          pa_token: ${{ secrets.PA_TOKEN }}          
