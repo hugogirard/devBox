@@ -1,4 +1,4 @@
-name: Nuild and deploy bicep modules
+name: Build and deploy bicep modules
 
 on:  
   # push:
@@ -23,6 +23,28 @@ jobs:
       
     outputs:
       modules: ${{ steps.prepare.outputs.modules }}
+  
+  deploy-bicep-modules:  
+
+    needs: read-module-configuration
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        modules: ${{ fromJson(needs.read-module-configuration.outputs.modules) }}
+    
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}           
+      
+      - name: deploy modules
+        run: |
+          az bicep publish --file ${{ matrix.modules.file }} --target br:${{ secrets.ACR_LOGIN_SERVER_NAME }}/${{ matrix.modules.name}}:${{ matrix.modules.version }}
 
     # env:
     #   DEPLOYMENT_NAME: bicep-module

@@ -3,7 +3,7 @@
         {
             "name": "bicep/devBoxProject",
             "version": "1",
-            "path": "iac/modules/devCenterProject/main.bicep"
+            "file": "iac/modules/devCenterProject/main.bicep"
         }
     ]
 }
