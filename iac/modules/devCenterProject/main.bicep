@@ -1,5 +1,5 @@
 @description('Provide the AzureAd UserId to assign project rbac for (get the current user with az ad signed-in-user show --query id)')
-param devboxProjectUsers array 
+param devboxProjectUser string 
 
 @description('Provide the AzureAd UserId to assign project rbac for (get the current user with az ad signed-in-user show --query id)')
 param devboxProjectAdmin string
@@ -21,7 +21,7 @@ module dcProject 'modules/devBox/project.bicep' = {
   params: {
     dcName: dcName
     devboxProjectAdmin: devboxProjectAdmin
-    devboxProjectUsers: devboxProjectUsers
+    devboxProjectUser: devboxProjectUser
     location: location
     projectTeamName: projectTeamName
     rgDcName: rgDcName

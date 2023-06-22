@@ -9,11 +9,11 @@ on:
        type: string
      devboxProjectAdmin:
        description: 'The admins of the project'
-       required: false
+       required: true
        type: string
      projectTeamName:
        description: 'The name of the devbox project'
-       required: false
+       required: true
        type: string
 
 jobs:

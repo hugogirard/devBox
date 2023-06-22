@@ -2,7 +2,7 @@ param projectTeamName string
 param location string 
 param dcName string
 param rgDcName string
-param devboxProjectUsers array 
+param devboxProjectUser string 
 param devboxProjectAdmin string 
 
 resource dc 'Microsoft.DevCenter/devCenters@2022-11-11-preview' existing = {
@@ -31,7 +31,7 @@ resource projectAdminRbac 'Microsoft.Authorization/roleAssignments@2022-04-01' =
 
 // Loop all users that need to be assigned to the devbox project
 var devCenterDevBoxUserRoleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '45d50f46-0b78-4001-a660-4198cbe8cd05')
-resource projectUserRbac 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for devboxProjectUser in devboxProjectUsers:{
+resource projectUserRbac 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: project
   name: guid(project.id, devboxProjectUser, devCenterDevBoxUserRoleId)
   properties: {
@@ -39,4 +39,4 @@ resource projectUserRbac 'Microsoft.Authorization/roleAssignments@2022-04-01' = 
     principalType: 'User'
     principalId: devboxProjectUser
   }
-}]
+}
