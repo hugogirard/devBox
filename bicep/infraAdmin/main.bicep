@@ -6,6 +6,9 @@ param location string
 @description('Azure resource group name')
 param managementRgName string
 
+//@description('Provide the AzureAd UserId to assign project rbac for (get the current user with az ad signed-in-user show --query id)')
+//param devboxProjectAdmin string
+
 param vnetConfig object = {
   addressSpace: '172.0.0.0/16'
 }
@@ -37,6 +40,25 @@ module vnetManagement 'modules/network/management.vnet.bicep' = {
   params: {
     location: location
     vnetConfig: vnetConfig
+  }
+}
+
+module logs 'modules/logs/logAnalytics.bicep' = {
+  scope: resourceGroup(rg.name)
+  name: 'logs'
+  params: {
+    location: location 
+    suffix: suffix
+  }
+}
+
+module devCenter 'modules/devBox/dev.center.bicep' = {
+  scope: resourceGroup(rg.name)
+  name: 'devcenter'
+  params: {
+    location: location
+    logId: logs.outputs.logId
+    suffix: suffix
   }
 }
 
