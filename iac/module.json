@@ -1,7 +1,7 @@
 {
     "modules":[
         {
-            "name": "bicep/devBoxproject",
+            "name": "bicep/devboxproject",
             "version": "1",
             "file": "iac/modules/devCenterProject/main.bicep"
         }
