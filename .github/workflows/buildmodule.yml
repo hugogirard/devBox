@@ -44,7 +44,7 @@ jobs:
       
       - name: deploy modules
         run: |
-          az bicep publish --file ${{ matrix.modules.file }} --target br:${{ secrets.ACR_LOGIN_SERVER_NAME }}/${{ matrix.modules.name}}:${{ matrix.modules.version }}
+          bicep publish ${{ matrix.modules.file }} --target br:${{ secrets.ACR_LOGIN_SERVER_NAME }}/${{ matrix.modules.name}}:${{ matrix.modules.version }}
 
     # env:
     #   DEPLOYMENT_NAME: bicep-module
