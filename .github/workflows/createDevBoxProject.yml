@@ -1,0 +1,30 @@
+name: Create DevBox Project
+
+on:
+ workflow_call:
+   inputs:
+     devboxProjectUsers:
+       description: 'The list of users that will have access to the project to create DevBox'
+       required: true
+       type: string
+     devboxProjectAdmin:
+       description: 'The admins of the project'
+       required: false
+       type: string
+     projectTeamName:
+       description: 'The name of the devbox project'
+       required: false
+       type: string
+
+jobs:
+  
+  create-devbox-project:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: create devbox project
+        run: |
+          echo ${{ fromJson(inputs.devboxProjectUsers) }}
+      
+    
