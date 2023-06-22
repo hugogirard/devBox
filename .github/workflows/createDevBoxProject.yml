@@ -1,6 +1,7 @@
 name: Create DevBox Project
 
 on:
+ workflow_dispatch:
  workflow_call:
    inputs:
      devboxProjectUsers:
