@@ -34,14 +34,14 @@ module acr 'modules/acr/acr.bicep' = {
   }
 }
 
-module vnetManagement 'modules/network/management.vnet.bicep' = {
-  scope: resourceGroup(rg.name)
-  name: 'vnetManagement'
-  params: {
-    location: location
-    vnetConfig: vnetConfig
-  }
-}
+// module vnetManagement 'modules/network/management.vnet.bicep' = {
+//   scope: resourceGroup(rg.name)
+//   name: 'vnetManagement'
+//   params: {
+//     location: location
+//     vnetConfig: vnetConfig
+//   }
+// }
 
 module logs 'modules/logs/logAnalytics.bicep' = {
   scope: resourceGroup(rg.name)
