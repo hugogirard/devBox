@@ -10,6 +10,7 @@ param managementRgName string
 //param devboxProjectAdmin string
 
 param vnetConfigHub object = {
+  name: 'vnet-hub'
   addressSpace: '172.0.0.0/16'
   subnets: [
     {
