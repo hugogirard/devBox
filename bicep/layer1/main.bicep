@@ -9,11 +9,19 @@ param managementRgName string
 //@description('Provide the AzureAd UserId to assign project rbac for (get the current user with az ad signed-in-user show --query id)')
 //param devboxProjectAdmin string
 
-param vnetConfig object = {
+param vnetConfigHub object = {
   addressSpace: '172.0.0.0/16'
+  subnets: [
+    {
+      name: 'AzureFirewallSubnet'
+      addressPrefix: '172.0.1.0/24'
+    }
+  ]
 }
 
 var suffix = uniqueString(rg.id)
+
+
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: managementRgName
@@ -31,6 +39,15 @@ module acr 'modules/acr/acr.bicep' = {
     location: location
     suffix: suffix
     tags: tags
+  }
+}
+
+module hubVnet 'modules/network/hub.vnet.bicep' = {
+  scope: resourceGroup(rg.name)
+  name: 'vnetHub'
+  params: {
+    location: location
+    vnetConfiguration: vnetConfigHub
   }
 }
 

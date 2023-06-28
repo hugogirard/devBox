@@ -11,3 +11,13 @@ This repository show 3 concepts in Azure
 - Azure Deployment Environment
 
 In this repository all will be in one monolith repository, but in a real world organization scenario you will have multiples ones.
+
+# Create project
+
+``
+az ad signed-in-user show --query id
+``
+
+https://devportal.azure.com
+
+https://learn.microsoft.com/en-us/azure/architecture/guide/azure-resource-manager/advanced-templates/enterprise-infrastructure-bicep-container-registry

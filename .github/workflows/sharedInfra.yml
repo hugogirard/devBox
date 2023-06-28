@@ -1,11 +1,11 @@
-name: Create Shared Infra Azure Resources
+name: Create Layer 1 Shared Infrastructure
 
 on:  
-  push:
-    branches:
-      - main
-    paths:
-      - "bicep/infraAdmin/*"
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - "bicep/layer1/*"
   workflow_dispatch:
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
       DEPLOYMENT_NAME: shared-deployment
       LOCATION: ${{ secrets.LOCATION }}
       RG_NAME: ${{ secrets.SHARED_RESOURCE_GROUP_NAME }}
-      WORKING_DIR: ./bicep/infraAdmin
+      WORKING_DIR: ./bicep/layer1
 
     runs-on: ubuntu-latest
 

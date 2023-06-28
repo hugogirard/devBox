@@ -1,0 +1,19 @@
+name: Destroy Shared Infrastructure Resources
+
+on:
+  workflow_dispatch:
+
+jobs:
+  destroy:
+    
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - run: |
+          az group delete --name ${{ env.SHARED_RESOURCE_GROUP_NAME }} --no-wait -y

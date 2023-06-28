@@ -2,15 +2,7 @@ name: Create DevBox Project
 
 on:
  workflow_dispatch:
-   inputs:
-     devboxProjectUsers:
-       description: 'The list of users that will have access to the project to create DevBox'
-       required: true
-       type: string
-     devboxProjectAdmin:
-       description: 'The admins of the project'
-       required: true
-       type: string
+   inputs: 
      projectTeamName:
        description: 'The name of the devbox project'
        required: true
@@ -23,8 +15,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: create devbox project
-        run: |
-          echo ${{ fromJson(inputs.devboxProjectUsers) }}
+      - name: Create DevBox Project        
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ secrets.SHARED_RESOURCE_GROUP_NAME }}}
+          template: iac/main.bicep
+          parameters: location=${{ env.LOCATION }} managementRgName=${{ env.RG_NAME }} 
       
     
